@@ -1,17 +1,31 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHouse, faBookOpen } from '@fortawesome/free-solid-svg-icons';
 import Home from './Home';
 import Prueba from './Prueba';
+import { StyleSheet } from 'react-native';
 
 const MainStack = createBottomTabNavigator();
 
 export default function MainTabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <MainStack.Navigator>
+    <MainStack.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          let iconColor = focused ? '#4FAD22' : '#808080'; 
+          
+          if (route.name === 'Home') {
+            return <FontAwesomeIcon icon={faHouse} color={iconColor} size={24} />;
+          } else if (route.name === 'Prueba') {
+            return <FontAwesomeIcon icon={faBookOpen} color={iconColor} size={24} />;
+          }
+        },
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#4FAD22',
+        tabBarInactiveTintColor: '#808080',
+      })}
+    >
       <MainStack.Screen
         name="Home"
         component={Home}
@@ -31,3 +45,16 @@ export default function MainTabLayout() {
     </MainStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: '#fff',
+    borderTopWidth: 0,
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+    height: 100 
+  },
+});
