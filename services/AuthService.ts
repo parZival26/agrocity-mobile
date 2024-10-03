@@ -34,12 +34,3 @@ export const login = async (loginData: LoginData) => {
     }
 }
 
-export const getToken = async (): Promise<string | null> => {
-    try {
-      const token = await AsyncStorage.getItem('access_token');
-      return token;
-    } catch (error) {
-      console.error('Error getting token:', error);
-      return null;
-    }
-  };

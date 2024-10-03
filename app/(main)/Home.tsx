@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/native'
 import React from 'react'
 import { SafeAreaView, Text } from 'react-native'
 
