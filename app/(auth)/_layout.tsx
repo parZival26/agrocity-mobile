@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import LoginScreen from './Login'; // Asegúrate de importar el componente correcto
+import LoginScreen from './Login';
 
 const AuthStack = createNativeStackNavigator();
 
