@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, Text, Touchable, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, SafeAreaView, Text, Touchable, TouchableOpacity } from 'react-native'
 import { UserPlant } from '@/interfaces/Plants'
-import { getUserPlants } from '@/services/PlantsSercie'
-import { NavigationProp } from '@react-navigation/native'
+import { getUserPlants } from '@/services/PlantsService'
+import { NavigationProp, useIsFocused } from '@react-navigation/native'
+import { ThemedView } from '@/components/ThemedView'
 
 const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [userPlants, setUserPlants] = useState<UserPlant[]>([])
+  const [loading, setLoading] = useState(true)
+  const isFocused = useIsFocused();
 
 
   const handleAddPlant = () => {
@@ -13,17 +16,45 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
   }
 
   useEffect(() => {
+
+
     const getPlants = async () => {
       const response = await getUserPlants()
+
+      
+
       if (response instanceof Array) {
         setUserPlants(response)
+  
+
+        setLoading(false)
       }else {
         alert(response.error)
       }
     }
 
-    getPlants()
-  }, [])
+    if (isFocused) {
+      getPlants()
+    }
+    
+
+
+    
+
+    
+  }, [isFocused])
+
+  if (loading) {
+    return (
+      <ThemedView style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </ThemedView>
+    );
+  }
 
   return (
     <SafeAreaView>
