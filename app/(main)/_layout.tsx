@@ -6,6 +6,7 @@ import Home from './Home';
 import Prueba from './Prueba';
 import WikiTabLayout from './(AgroSearch)/_layout'; 
 import { StyleSheet } from 'react-native';
+import PlantsTabLayout from './(Plants)/_layout';
 
 const MainStack = createBottomTabNavigator();
 
@@ -46,10 +47,10 @@ export default function MainTabLayout() {
         }}
       />
       <MainStack.Screen
-        name="Prueba"
-        component={Prueba}
+        name="Plants"
+        component={PlantsTabLayout}
         options={{
-          title: 'Prueba',
+          title: 'Plants',
           headerShown: false,
         }}
       />
