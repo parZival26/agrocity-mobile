@@ -13,7 +13,7 @@ export const getToken = async (): Promise<string | null> => {
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://tuquio.com/agrocity/api',
     headers: {
         "Content-Type": "application/json",
     },
