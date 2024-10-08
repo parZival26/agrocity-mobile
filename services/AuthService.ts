@@ -23,6 +23,14 @@ export const login = async (loginData: LoginData) => {
        if (error instanceof AxiosError) {
             if (error.response?.status === 404) {
                 return { error: 'Usuario o contraseña incorrectos' };
+            } else if (error.response?.status === 400) {
+                let errorMessage = error.response.data['message'];
+
+                if (Array.isArray(errorMessage)) {
+                    errorMessage = errorMessage.join(', ');
+                }
+
+                return { error: `Error en los datos: ${errorMessage}` };
             }
             console.error("Axios error details:", error);
             console.error("Config: ", error.config);

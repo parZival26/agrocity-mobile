@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, SafeAreaView, Text, Touchable, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, SafeAreaView, Text, TouchableOpacity } from 'react-native'
 import { UserPlant } from '@/interfaces/Plants'
 import { getUserPlants } from '@/services/PlantsService'
 import { NavigationProp, useIsFocused } from '@react-navigation/native'
@@ -10,25 +10,21 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [loading, setLoading] = useState(true)
   const isFocused = useIsFocused();
 
-
   const handleAddPlant = () => {
     navigation.navigate('AddPlant')
   }
 
+  const handlePlantCare = (id: number) => {
+    navigation.navigate('PlantCare', { screen: 'Index', params: { id } })
+  }
+
   useEffect(() => {
-
-
     const getPlants = async () => {
       const response = await getUserPlants()
-
-      
-
       if (response instanceof Array) {
         setUserPlants(response)
-  
-
         setLoading(false)
-      }else {
+      } else {
         alert(response.error)
       }
     }
@@ -36,12 +32,6 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
     if (isFocused) {
       getPlants()
     }
-    
-
-
-    
-
-    
   }, [isFocused])
 
   if (loading) {
@@ -66,7 +56,9 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <Text>Add Plant</Text>
       </TouchableOpacity>
       {userPlants.map((plant) => (
-        <Text key={plant.id}>{plant.name}</Text>
+        <TouchableOpacity key={plant.id} onPress={() => handlePlantCare(plant.id)}>
+          <Text>{plant.name}</Text>
+        </TouchableOpacity>
       ))}
     </SafeAreaView>
   )
