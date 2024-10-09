@@ -15,6 +15,10 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
     navigation.navigate('AddPlant')
   }
 
+  const handlePlantCare = (id: number) => {
+    navigation.navigate('PlantCare', { screen: 'Index', params: { id } })
+  }
+
   useEffect(() => {
     const getPlants = async () => {
       const response = await getUserPlants()
@@ -57,9 +61,14 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         renderItem={({ item }) => (
-          <View style={styles.plantCard}>
-            <Text style={styles.plantName}>{item.name}</Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => handlePlantCare(item.id)}
+            style={styles.plantCard}
+          >
+            <View>
+              <Text style={styles.plantName}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </SafeAreaView>
@@ -70,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0F8E7',  
-    padding: 20,
+    padding: 20, 
   },
   title: {
     fontSize: 30,

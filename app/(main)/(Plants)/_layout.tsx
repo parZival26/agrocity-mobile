@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import Garden from './Garden';
 import AddPlant from './AddPlant';
+import PlantCareTabLayout from './(PlantCare)/_layout';
 const PlantsStack = createNativeStackNavigator();
 
 export default function PlantsTabLayout() {
@@ -24,6 +25,14 @@ export default function PlantsTabLayout() {
         component={AddPlant}
         options={{
           title: 'Add Plant',
+          headerShown: false,
+        }}
+      />
+      <PlantsStack.Screen
+        name="PlantCare"
+        component={PlantCareTabLayout}
+        options={{
+          title: 'Plant Care',
           headerShown: false,
         }}
       />
