@@ -1,8 +1,9 @@
 import React from 'react'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHouse, faBookOpen, faLeaf } from '@fortawesome/free-solid-svg-icons';
-import Home from './Home';
+import { faListCheck, faBookOpen, faLeaf } from '@fortawesome/free-solid-svg-icons';
+import Misiones from './Misiones';
+import Prueba from './Prueba';
 import WikiTabLayout from './(AgroSearch)/_layout'; 
 import { StyleSheet } from 'react-native';
 import PlantsTabLayout from './(Plants)/_layout';
@@ -14,19 +15,19 @@ export default function MainTabLayout() {
     <MainStack.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          let iconColor = focused ? '#4FAD22' : '#808080'; 
+          let iconColor = focused ? '#4FAD22' : '#808080';
 
           if (route.name === 'AgroSearch') {
-            return <FontAwesomeIcon icon={faBookOpen} color={iconColor} size={24} />; 
-          } else if (route.name === 'Home') {
-            return <FontAwesomeIcon icon={faHouse} color={iconColor} size={24} />;
-          } else if (route.name === 'Plants') { 
-            return <FontAwesomeIcon icon={faLeaf} color={iconColor} size={24} />; 
+            return <FontAwesomeIcon icon={faBookOpen} color={iconColor} size={24} />;
+          } else if (route.name === 'Misiones') {
+            return <FontAwesomeIcon icon={faListCheck} color={iconColor} size={24} />;
+          } else if (route.name === 'Plants') {
+            return <FontAwesomeIcon icon={faLeaf} color={iconColor} size={24} />;
           }
         },
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: '#4FAD22', 
-        tabBarInactiveTintColor: '#808080', 
+        tabBarActiveTintColor: '#4FAD22',
+        tabBarInactiveTintColor: '#808080',
       })}
     >
       <MainStack.Screen
@@ -35,24 +36,16 @@ export default function MainTabLayout() {
         options={{
           title: 'Wiki',
           headerShown: false,
-        }}
-      />
-      <MainStack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          title: 'Home',
-          headerShown: false,
-        }}
-      />
+        }} />
+
       <MainStack.Screen
         name="Plants"
-        component={PlantsTabLayout}  
+        component={PlantsTabLayout}
         options={{
           title: 'Plants',
           headerShown: false,
-        }}
-      />
+        }} />
+
     </MainStack.Navigator>
   );
 }

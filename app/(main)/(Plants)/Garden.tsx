@@ -54,7 +54,7 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.divider} />
+      <View style={styles.divider} /> 
 
       <FlatList
         data={userPlants}
