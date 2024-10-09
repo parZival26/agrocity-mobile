@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 import { PlantDetail } from '@/interfaces/Plants';
 import { getPlant } from '@/services/WikiService';
@@ -47,23 +47,30 @@ const PlantDetailScreen = ({ navigation }: { navigation: NavigationProp<any> }) 
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.detailContainer}>
+          {plant?.imageURL && (
+            <Image
+              source={{ uri: plant.imageURL }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          )}
           <Text style={styles.plantName}>{plant?.commonName}</Text>
           <Text style={styles.scientificName}>({plant?.scientificName})</Text>
 
           <View style={styles.infoContainer}>
-            <Text style={styles.label}>Family:</Text>
+            <Text style={styles.label}>Familia:</Text>
             <Text style={styles.info}>{plant?.family}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.label}>Harvest Season:</Text>
+            <Text style={styles.label}>Temporada de cosecha:</Text>
             <Text style={styles.info}>{plant?.harvestSeason}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.label}>Sowing Season:</Text>
+            <Text style={styles.label}>Época de siembra:</Text>
             <Text style={styles.info}>{plant?.sowingSeason}</Text>
           </View>
           <View style={styles.descriptionContainer}>
-            <Text style={styles.label}>Description:</Text>
+            <Text style={styles.label}>Descripcion:</Text>
             <Text style={styles.description}>{plant?.description}</Text>
           </View>
         </View>
@@ -77,7 +84,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F0F8E7',
     paddingHorizontal: 20,
-    
   },
   loadingContainer: {
     flex: 1,
@@ -87,12 +93,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#4FAD22', 
+    color: '#4FAD22',
     textAlign: 'center',
-
-    
     marginBottom: '10%',
-    marginTop: '10%'
+    marginTop: '10%',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -108,7 +112,13 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     marginLeft: '5%',
-    marginRight: '5%'
+    marginRight: '5%',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
   },
   plantName: {
     fontSize: 24,
