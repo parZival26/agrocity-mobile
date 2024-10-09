@@ -63,8 +63,9 @@ const Garden = ({ navigation }: { navigation: NavigationProp<any> }) => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => handlePlantCare(item.id)}
+            style={styles.plantCard}
           >
-            <View style={styles.plantCard}>
+            <View>
               <Text style={styles.plantName}>{item.name}</Text>
             </View>
           </TouchableOpacity>
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F0F8E7',  
-    padding: 20,
+    padding: 20, 
   },
   title: {
     fontSize: 30,

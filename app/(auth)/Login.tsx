@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#F0F8E7',
     },
     containerinput: {
         backgroundColor: '#ffffff',
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
         elevation: 10,
         shadowColor: 'grey',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
     },
     title: {
         fontSize: 30,

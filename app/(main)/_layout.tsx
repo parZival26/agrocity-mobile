@@ -1,9 +1,8 @@
 import React from 'react'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHouse, faBookOpen, faBook, } from '@fortawesome/free-solid-svg-icons'; 
+import { faHouse, faBookOpen, faLeaf } from '@fortawesome/free-solid-svg-icons';
 import Home from './Home';
-import Prueba from './Prueba';
 import WikiTabLayout from './(AgroSearch)/_layout'; 
 import { StyleSheet } from 'react-native';
 import PlantsTabLayout from './(Plants)/_layout';
@@ -21,8 +20,8 @@ export default function MainTabLayout() {
             return <FontAwesomeIcon icon={faBookOpen} color={iconColor} size={24} />; 
           } else if (route.name === 'Home') {
             return <FontAwesomeIcon icon={faHouse} color={iconColor} size={24} />;
-          } else if (route.name === 'Prueba') {
-            return <FontAwesomeIcon icon={faBook} color={iconColor} size={24} />; 
+          } else if (route.name === 'Plants') { 
+            return <FontAwesomeIcon icon={faLeaf} color={iconColor} size={24} />; 
           }
         },
         tabBarStyle: styles.tabBar,
@@ -48,7 +47,7 @@ export default function MainTabLayout() {
       />
       <MainStack.Screen
         name="Plants"
-        component={PlantsTabLayout}
+        component={PlantsTabLayout}  
         options={{
           title: 'Plants',
           headerShown: false,
