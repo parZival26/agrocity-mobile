@@ -1,30 +1,75 @@
-import React from 'react';
-import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { ThemedView } from '@/components/ThemedView';
+import { UserPlantMission } from '@/interfaces/Mission';
+import { getUserPlantMissions } from '@/services/MissionService';
+import { NavigationProp, RouteProp, useIsFocused, useRoute } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
 
-const missions = [
-  { id: 1, title: 'Misión #1', imageUrl: 'https://static.vecteezy.com/ti/vetor-gratis/p1/2392532-cartoon-vector-illustration-of-a-shovel-gratis-vetor.jpg/50', description: 'Descripción de la Misión 1' },
-  { id: 2, title: 'Misión #2', imageUrl: 'https://img.freepik.com/vector-gratis/mano-dando-planta-crecimiento_78370-855.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1728345600&semt=ais_hybrid/50', description: 'Descripción de la Misión 2' },
-  { id: 3, title: 'Misión #3', imageUrl: 'https://us.123rf.com/450wm/yupiramos/yupiramos1808/yupiramos180800600/112380652-planta-con-maceta-de-rociadores-dise%C3%B1o-de-ilustraciones-vectoriales.jpg?ver=6/50', description: 'Descripción de la Misión 3' },
-];
 
-const Task = ({ navigation }: { navigation: any }) => {
-  const handlePressMission = (mission: any) => {
-    navigation.navigate('TaskDescription', { mission }); 
+type TaskRouteProp = RouteProp<{ TaskDetail: { id: number } }, 'TaskDetail'>;
+
+
+const Task = ({ navigation }: { navigation: NavigationProp<any> }) => {
+  const [userPlantMissions, setUserPlantMissions] = React.useState<UserPlantMission[]>([]);
+  const route = useRoute<TaskRouteProp>();
+  const { id } = route.params ?? {};
+  const [loading, setLoading] = React.useState(true);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+  
+    const fetchUserPlantMissions = async () => {
+      const response = await getUserPlantMissions(id);
+      if (response instanceof Array) {
+        setUserPlantMissions(response);
+        setLoading(false);
+      } else {
+        alert(response.error);
+      }
+    };
+
+    if (isFocused) {
+      fetchUserPlantMissions();
+    }
+  }, [isFocused]);
+
+  const handlePressMission = (id:number) => {
+    navigation.navigate('TaskDescription', { id }); 
   };
+
+  if (loading) {
+    return (
+      <ThemedView style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </ThemedView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>AgroCity</Text>
       <Text style={styles.subtitle}>Misiones</Text>
       <View style={styles.divider} />
-      <View style={styles.missionsContainer}>
-        {missions.map((mission) => (
-          <TouchableOpacity key={mission.id} style={styles.mission} onPress={() => handlePressMission(mission)}>
-            <Image source={{ uri: mission.imageUrl }} style={styles.missionImage} />
-            <Text style={styles.missionText}>{mission.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <ScrollView style={styles.missionsContainer}>
+        {
+        userPlantMissions.length === 0 ? (
+          <Text>No hay misiones disponibles</Text>
+        ) : (
+          userPlantMissions.map((mission) => (
+            <TouchableOpacity key={mission.id} style={styles.mission} onPress={() => handlePressMission(mission.Mission.id)}>
+              <Text style={styles.missionText}>{mission.Mission.name}</Text>
+            </TouchableOpacity>
+          ))
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };

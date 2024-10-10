@@ -43,6 +43,14 @@ const Wiki = ({ navigation }: { navigation: NavigationProp<any> }) => {
     fetchPlants();
   }, []);
 
+  const filterPlants = () => {
+    return plants.filter(plant =>
+      plant.commonName.toLowerCase().includes(search.toLowerCase()) ||
+      plant.scientificName.toLowerCase().includes(search.toLowerCase()) ||
+      plant.family.toLowerCase().includes(search.toLowerCase())
+    );
+  };
+
   if (loading) {
     return (
       <ThemedView style={{
@@ -77,7 +85,7 @@ const Wiki = ({ navigation }: { navigation: NavigationProp<any> }) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
-        {plants.map(plant => (
+        {filterPlants().map(plant => (
           <TouchableOpacity key={plant.id} onPress={() => redirect(plant.id)}>
             <View style={styles.plantContainer}>
               <Image

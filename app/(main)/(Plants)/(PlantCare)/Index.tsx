@@ -34,7 +34,7 @@ const Index = ({ navigation }: { navigation: NavigationProp<any> }) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.taskbutton} onPress={() => navigation.navigate('Task')}>
+      <TouchableOpacity style={styles.taskbutton} onPress={() => navigation.navigate('Task', {id})}>
         <Text style={styles.subtitle}>Haz tus misiones</Text>
       </TouchableOpacity>
 

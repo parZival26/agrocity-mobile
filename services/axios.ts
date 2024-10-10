@@ -13,7 +13,7 @@ export const getToken = async (): Promise<string | null> => {
 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://192.168.1.29:3000',
+    baseURL: 'http://localhost:3000',
     headers: {
         "Content-Type": "application/json",
     },
